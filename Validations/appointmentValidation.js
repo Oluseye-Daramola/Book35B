@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 
 //Needs no validation as controller requires no body for customers.
-=======
+
 const Joi = require('joi');
 
 const createAppointmentSchema = Joi.object({
