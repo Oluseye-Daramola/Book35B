@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 
 
 // needed for public bookong controller and endpoint
-=======
 const { addMinutes, isSameDay, getDayOfWeek, getStartOfDay, getEndOfDay } = require('./timeUtils');
 
 const generateSlotsForDay = (availability, serviceDuration, date, existingAppointments = []) => {
@@ -89,4 +87,3 @@ module.exports = {
   findAvailableSlots,
   checkSlotAvailability
 };
->>>>>>> master
