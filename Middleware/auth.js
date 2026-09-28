@@ -1,66 +1,56 @@
+const jwt = require('jsonwebtoken');
 
-const { jwtSecret } = require("../Config/env");
-const jwt = require("jsonwebtoken");
-const Provider = require("../Models/Provider");
+/**
+ * Verifies the JWT sent in the Authorization header.
+ *
+ * Expected format:
+ * Authorization: Bearer <token>
+ *
+ * On success:
+ * - Decodes the JWT
+ * - Attaches the payload to req.user
+ * - Passes control to the next middleware/controller
+ */
+function authenticate(req, res, next) {
+  const authHeader = req.headers.authorization;
 
-
-
-const protect = async(req, res, next) => {
-  
-  // the logic
-  let token;
-
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")){
-    token = req.headers.authorization.split(" ")[1];
-  }
-
-  
-  if (!token){
+  if (!authHeader) {
     return res.status(401).json({
       success: false,
-      message: "Not authorized, no token provided",
+      error: 'Authorization header is required',
     });
   }
 
+  const [scheme, token] = authHeader.split(' ');
 
-  //verify token
-  let decoded;
-
-  try{
-    decoded = jwt.verify(token, jwtSecret);
-  } catch (err){
+  if (scheme !== 'Bearer' || !token) {
     return res.status(401).json({
       success: false,
-      message: "Not authorized, invalid or expired token",
+      error: 'Authorization format must be Bearer <token>',
     });
   }
 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  //Provider with request
-  const provider = await Provider.findById(decoded.id);
+    req.user = decoded;
 
-  if (!provider){
+    next();
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        success: false,
+        error: 'Token has expired',
+      });
+    }
+
     return res.status(401).json({
       success: false,
-      message: "Not authorized, provider no longer exists",
+      error: 'Invalid token',
     });
   }
-  
-  req.provider = provider;
-  next();
+}
 
-
-
-
-  
-};
-
-
-
-
-
-
-
-
-
-module.exports = { protect };
+module.exports = {
+  authenticate,
+};  
