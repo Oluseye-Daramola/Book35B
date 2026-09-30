@@ -10,11 +10,6 @@ const bcrypt = require("bcryptjs");
 
 
 
-
-
-
-
-
 const generateSlug = (text) => {
   return text
     .toLowerCase()
@@ -23,8 +18,6 @@ const generateSlug = (text) => {
     .replace(/\s+/g, "-")           // replace spaces with hyphens
     .replace(/-+/g, "-");           // collapse multiple hyphens into one
 };
-
-
 
 
 //handles SignUp
@@ -162,16 +155,6 @@ const login = async (req, res, next) =>{
   }
   
 };
-
-
-
-
-
-
-
-
-
-
 
 
 

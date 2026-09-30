@@ -1,8 +1,8 @@
 {
   "name": "appointmentbookingapp",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "A production-shaped backend for an appointment booking platform, built with **Node.js**,\r **Express**, and **MongoDB (Mongoose)**. Providers publish their services and weekly\r availability; customers book conflict-free appointments.",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
@@ -25,10 +25,18 @@
     "hpp": "^0.2.3",
     "joi": "^18.2.9",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.10.2",
+    "mongoose": "^9.10.3",
     "morgan": "^1.12.1",
     "nodemailer": "^10.0.10",
     "nodemon": "^3.1.14",
     "winston": "^3.19.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oluseye-Daramola/AppointmentBookingApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Oluseye-Daramola/AppointmentBookingApp/issues"
+  },
+  "homepage": "https://github.com/Oluseye-Daramola/AppointmentBookingApp#readme"
 }

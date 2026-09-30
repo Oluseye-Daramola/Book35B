@@ -15,13 +15,13 @@ const getMe = async (req, res, next) =>{
       
       data: {
         provider: {
-          id: req.provider._id,
-          name: req.provider.name,
-          businessName: req.provider.businessName,
-          slug: req.provider.slug,
-          email: req.provider.email,
-          phone: req.provider.phone,
-          bio: req.provider.bio,
+          id: req.user._id,
+          name: req.user.name,
+          businessName: req.user.businessName,
+          slug: req.user.slug,
+          email: req.user.email,
+          phone: req.user.phone,
+          bio: req.user.bio,
         },
         
       },
@@ -49,7 +49,7 @@ const updateMe = async (req, res, next) => {
     if (phone !== undefined) updates.phone = phone;
 
     const updatedProvider = await Provider.findByIdAndUpdate(
-      req.provider._id,
+      req.user._id,
       updates,
       { new: true, runValidators: true }
     );
@@ -74,12 +74,6 @@ const updateMe = async (req, res, next) => {
   }
   
 };
-
-
-
-
-
-
 
 
 module.exports ={ getMe, updateMe };

@@ -18,8 +18,6 @@ const errorHandler = require("./Middleware/errorHandler");
 
 
 
-app.use(express.json()); //middleware to parse JSON request bodies
-
 app.use(helmet());
 app.use(cors({ origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.split(",").map(x => x.trim()) : true }));
 app.use(express.json({ limit: "1mb" }));

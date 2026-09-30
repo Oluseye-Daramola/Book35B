@@ -40,11 +40,6 @@ const validateCreateService = (req, res, next) => {
 
 
 
-
-
-
-
-
 const validateUpdateService = (req, res, next) => {
   
   const errors = [];
@@ -92,11 +87,6 @@ const validateUpdateService = (req, res, next) => {
 
 
 
-
-
-
-
-module.exports = { validateCreateService, validateUpdateService };
 const Joi = require('joi');
 
 const createServiceSchema = Joi.object({
@@ -237,6 +227,8 @@ const serviceIdSchema = Joi.object({
 });
 
 module.exports = {
+  validateCreateService,
+  validateUpdateService,
   createServiceSchema,
   updateServiceSchema,
   serviceIdSchema

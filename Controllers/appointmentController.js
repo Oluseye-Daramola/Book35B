@@ -2,16 +2,11 @@
 
 const Appointment = require("../Models/Appointment");
 
-
-
-
-
-
 const getAppointments = async(req, res, next)=>{
 
   try{
 
-    const appointment = await Appointment.find({ provider: req.provider._id });
+    const appointment = await Appointment.find({ provider: req.user._id });
 
     
     res.status(200).json({
@@ -26,11 +21,6 @@ const getAppointments = async(req, res, next)=>{
   }
   
 }
-
-
-
-
-
 
 
 const getAppointmentById = async(req, res, next)=>{
@@ -49,7 +39,7 @@ const getAppointmentById = async(req, res, next)=>{
     }
 
 
-    if (appointment.provider.toString() !== req.provider._id.toString()) {
+    if (appointment.provider.toString() !== req.user._id.toString()) {
       
       return res.status(403).json({
         success: false,
@@ -73,8 +63,6 @@ const getAppointmentById = async(req, res, next)=>{
 
 
 
-
-
 const cancelAppointment = async (req, res, next) => {
   
   try {
@@ -87,7 +75,7 @@ const cancelAppointment = async (req, res, next) => {
       });
     }
 
-    if (appointment.provider.toString() !== req.provider._id.toString()) {
+    if (appointment.provider.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: "You do not have access to this appointment",
@@ -120,16 +108,6 @@ const cancelAppointment = async (req, res, next) => {
     next(err);
   }
 };
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = { getAppointments, getAppointmentById, cancelAppointment };

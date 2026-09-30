@@ -6,11 +6,7 @@ const { getMe, updateMe } = require("../Controllers/providerController")
 
 const { validateUpdateProvider } = require("../Validations/providerValidation");
 
-const { protect } = require("../Middleware/auth");
-
-
-
-
+const { authenticate } = require("../Middleware/auth");
 
 router.get("/test", (req, res) => {
     res.json({
@@ -20,22 +16,9 @@ router.get("/test", (req, res) => {
 });
 
 
+router.get("/me", authenticate, getMe);
 
-router.get("/me", protect, getMe);
-
-
-router.put("/me", protect, validateUpdateProvider, updateMe);
-
-
-
-
-
-
-
-
-
-
-
+router.put("/me", authenticate, validateUpdateProvider, updateMe);
 
 
 module.exports = router;

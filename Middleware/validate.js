@@ -4,6 +4,27 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_ONLY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
+
+function validate(schema, source = "body") {
+  return (req, res, next) => {
+    const { error, value } = schema.validate(req[source], {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: error.details.map((d) => d.message),
+      });
+    }
+
+    req[source] = value;
+    next();
+  };
+}
+
 function isValidObjectId(value) {
   return mongoose.Types.ObjectId.isValid(value);
 }
@@ -293,6 +314,7 @@ function validateProviderLogin(req, res, next) {
 }
 
 module.exports = {
+  validate,
   validateAppointmentInput,
   validateAvailabilityQuery,
   validateProviderRegistration,

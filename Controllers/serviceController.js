@@ -1,11 +1,6 @@
 
 const Service = require("../Models/Service");
 
-
-
-
-
-
 const createService = async (req, res, next) => {
   
   try {
@@ -13,7 +8,7 @@ const createService = async (req, res, next) => {
     const { name, description, durationMinutes, priceMinorUnits, currency } = req.body;
 
     const service = await Service.create({
-      provider: req.provider._id,
+      provider: req.user._id,
       name,
       description,
       durationMinutes,
@@ -35,14 +30,11 @@ const createService = async (req, res, next) => {
 };
 
 
-
-
-
 const getServices = async (req, res, next) => {
   
   try {
     
-    const services = await Service.find({ provider: req.provider._id });
+    const services = await Service.find({ provider: req.user._id });
 
     res.status(200).json({
       success: true,
@@ -58,9 +50,6 @@ const getServices = async (req, res, next) => {
 
 
 
-
-
-
 const updateService = async (req, res, next) => {
   
   try {
@@ -73,7 +62,7 @@ const updateService = async (req, res, next) => {
       });
     }
 
-    if (service.provider.toString() !== req.provider._id.toString()) {
+    if (service.provider.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: "You do not have access to this service",
@@ -124,7 +113,7 @@ const deleteService = async (req, res, next) => {
       });
     }
 
-    if (service.provider.toString() !== req.provider._id.toString()) {
+    if (service.provider.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: "You do not have access to this service",
@@ -144,18 +133,6 @@ const deleteService = async (req, res, next) => {
   }
   
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

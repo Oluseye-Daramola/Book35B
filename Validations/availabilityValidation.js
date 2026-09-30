@@ -98,7 +98,7 @@ const validateUpdateAvailability = (req, res, next) => {
 
 
 
-module.exports = { validateCreateAvailability, validateUpdateAvailability };
+
 const Joi = require('joi');
 
 const createAvailabilitySchema = Joi.object({
@@ -269,6 +269,8 @@ const bulkAvailabilitySchema = Joi.object({
 });
 
 module.exports = {
+  validateCreateAvailability,
+  validateUpdateAvailability,
   createAvailabilitySchema,
   updateAvailabilitySchema,
   availabilityIdSchema,

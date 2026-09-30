@@ -6,15 +6,7 @@ const { createService, getServices, updateService, deleteService } = require("..
 
 const { validateCreateService, validateUpdateService } = require("../Validations/serviceValidation");
 
-const { protect } = require("../Middleware/auth");
-
-
-
-
-
-
-
-
+const { authenticate } = require("../Middleware/auth");
 
 
 
@@ -27,30 +19,12 @@ router.get("/test", (req, res) => {
 
 
 
+router.post("/", authenticate, validateCreateService, createService);
 
+router.get("/", authenticate, getServices);
 
+router.put("/:id", authenticate, validateUpdateService, updateService);
 
-
-router.post("/", protect, validateCreateService, createService);
-
-
-
-router.get("/", protect, getServices);
-
-
-router.put("/:id", protect, validateUpdateService, updateService);
-
-
-router.delete("/:id", protect, deleteService);
-
-
-
-
-
-
-
-
-
-
+router.delete("/:id", authenticate, deleteService);
 
 module.exports = router;

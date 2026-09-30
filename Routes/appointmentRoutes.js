@@ -2,14 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const { protect } = require("../Middleware/auth");
+const { authenticate } = require("../Middleware/auth");
 
 const { getAppointments, getAppointmentById, cancelAppointment } = require("../Controllers/appointmentController")
-
-
-
-
-
 
 
 router.get("/test", (req, res) => {
@@ -23,7 +18,7 @@ router.get("/test", (req, res) => {
 
 // Temporary for Login texting (to be removed later)
 
-// router.get("/test-protected", protect, (req, res) => {
+// router.get("/test-protected", authenticate, (req, res) => {
   
 //   res.json({
     
@@ -40,13 +35,11 @@ router.get("/test", (req, res) => {
 // });
 
 
+router.get("/",authenticate,getAppointments);
 
+router.get("/:id", authenticate, getAppointmentById);
 
-router.get("/",protect,getAppointments);
-
-router.get("/:id", protect, getAppointmentById);
-
-router.patch("/:id/cancel", protect, cancelAppointment);
+router.patch("/:id/cancel", authenticate, cancelAppointment);
 
 
 

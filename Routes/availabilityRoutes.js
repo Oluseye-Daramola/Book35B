@@ -6,7 +6,7 @@ const { createAvailability, getAvailability, updateAvailability, deleteAvailabil
 
 const { validateCreateAvailability, validateUpdateAvailability } = require("../Validations/availabilityValidation");
 
-const { protect } = require("../Middleware/auth");
+const { authenticate } = require("../Middleware/auth");
 
 
 
@@ -25,13 +25,13 @@ router.get("/test", (req, res) => {
 
 
 
-router.post("/", protect, validateCreateAvailability, createAvailability);
+router.post("/", authenticate, validateCreateAvailability, createAvailability);
 
-router.put("/:id", protect, validateUpdateAvailability, updateAvailability);
+router.put("/:id", authenticate, validateUpdateAvailability, updateAvailability);
 
-router.get("/", protect, getAvailability);
+router.get("/", authenticate, getAvailability);
 
-router.delete("/:id", protect, deleteAvailability);
+router.delete("/:id", authenticate, deleteAvailability);
 
 
 

@@ -2,11 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const { getPublicProviderProfile, getPublicProviderServices } = require("../Controllers/publicController");
-
-
-
-
+const { getPublicProviderProfile, getPublicProviderServices, createAppointment } = require("../Controllers/publicController");
+const { validate } = require("../Middleware/validate");
+const { createAppointmentSchema } = require("../Validations/appointmentValidation");
 
 
 router.get("/test", (req, res) => {
@@ -16,18 +14,10 @@ router.get("/test", (req, res) => {
     });
 });
 
-
-
 router.get("/providers/:slug", getPublicProviderProfile);
-
 
 router.get("/providers/:slug/services", getPublicProviderServices);
 
-
-
-
-
-
-
+router.post("/appointments", validate(createAppointmentSchema), createAppointment);
 
 module.exports = router;

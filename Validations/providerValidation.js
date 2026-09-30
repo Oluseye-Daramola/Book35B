@@ -35,16 +35,6 @@ const validateUpdateProvider = (req, res, next) => {
 };
 
 
-
-
-
-
-
-
-
-
-module.exports ={validateUpdateProvider };
-
 const Joi = require('joi');
 
 const updateProviderSchema = Joi.object({
@@ -155,6 +145,7 @@ const slugSchema = Joi.object({
 });
 
 module.exports = {
+  validateUpdateProvider,
   updateProviderSchema,
   updatePasswordSchema,
   providerIdSchema,
